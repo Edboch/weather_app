@@ -1,3 +1,37 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: cadetblue;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.current-forecast {
+    margin-top: 5vh;
+    margin: 5vh auto 0;
+    padding: 24px;
+    border-radius: 24px;
+    background-color: rgba(9, 10, 10, 0.5);
+    color: #fff;
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+}
+
+.temp-display {
+    justify-items: center;
+    font-size: 1.1rem;
+}
+
+.details {
+    font-size: 1.2rem;
+}
+
+.temp {
+    font-size: 4rem;
 }
