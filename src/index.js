@@ -1,19 +1,29 @@
 import "./style.css"
-import * as data from './data.json'
+// import * as data from './data.json'
 
 async function getLocationWeather(loc) {
-    // const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${loc}?unitGroup=uk&key=974CB98EEDPG3VEFFCX2KQUDW&contentType=json`;
-    // const response = await fetch(url,{"method":"GET", "headers":{}});
-    // const data = await response.json();
-    console.log(data);
-    renderCurrentForecast(data);
+    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${loc}?unitGroup=uk&key=974CB98EEDPG3VEFFCX2KQUDW&contentType=json`;
+    try {
+        const response = await fetch(url,{"method":"GET", "headers":{}});
+        const data = await response.json();
+        // console.log(data);
+        renderCurrentForecast(data);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-getLocationWeather("London");
+function clearCurrentForecast() {
+    const tempDisplay = document.querySelector('.temp-display');
+    const details = document.querySelector('.details');
+    tempDisplay.innerHTML = '';
+    details.innerHTML = '';
+}
 
 
 
 function renderCurrentForecast(data) {
+    clearCurrentForecast();
     const current = document.querySelector('.current-forecast');
     const tempDisplay = current.querySelector('.temp-display');
     const details = current.querySelector('.details');
@@ -26,7 +36,7 @@ function renderCurrentForecast(data) {
     const humidity = document.createElement('p');
     const visibility = document.createElement('p');
     const windspeed = document.createElement('p');
-    const time = document.createElement('p');
+
 
     location.classList.add('location');
     temp.classList.add('temp');
@@ -35,7 +45,7 @@ function renderCurrentForecast(data) {
     humidity.classList.add('humidity');
     visibility.classList.add('visibility');
     windspeed.classList.add('windspeed');
-    time.classList.add('last-checked')
+
 
     location.textContent = data.resolvedAddress;
     temp.textContent = currentForecast.temp + ' °C';
@@ -44,7 +54,7 @@ function renderCurrentForecast(data) {
     humidity.textContent = 'Humidity : ' + currentForecast.humidity+ '%';
     visibility.textContent = 'Visibility : ' + currentForecast.visibility + ' miles';
     windspeed.textContent = 'Wind Speed : ' + currentForecast.windspeed + ' mph';
-    time.textContent = 'Last Checked : ' + currentForecast.datetime;
+
 
     tempDisplay.append(
         location,
@@ -55,10 +65,11 @@ function renderCurrentForecast(data) {
     details.append(
         humidity,
         visibility,
-        windspeed,
-        time
+        windspeed
     )
 }
+
+
 
 function capitalise(string) {
     let words = string.split(' ');
@@ -71,3 +82,20 @@ function capitalise(string) {
     }
     return result
 }
+
+function makeSearchListener() {
+    const form = document.querySelector('.search');
+    const searchBar = form.querySelector('#search-bar');
+
+    form.addEventListener('submit',(e) => {
+        e.preventDefault();
+        const loc = searchBar.value;
+        getLocationWeather(loc);
+        searchBar.value = '';
+    })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    getLocationWeather("London");
+    makeSearchListener();
+})
