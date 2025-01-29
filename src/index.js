@@ -6,8 +6,9 @@ async function getLocationWeather(loc) {
     try {
         const response = await fetch(url,{"method":"GET", "headers":{}});
         const data = await response.json();
-        // console.log(data);
+        console.log(data);
         renderCurrentForecast(data);
+        renderDayForecast(data);
     } catch (error) {
         console.error(error);
     }
@@ -20,7 +21,25 @@ function clearCurrentForecast() {
     details.innerHTML = '';
 }
 
+function renderDayForecast(data) {
+    const container = document.querySelector('.day-forecast');
+    const hours = data.days["0"].hours;
+    hours.forEach(hour => {
+        const hourCard = document.createElement('div');
+        hourCard.setAttribute('data-hour',hour.datetime);
 
+        const time = document.createElement('p');
+        const condition = document.createElement('p');
+        const temp = document.createElement('p');
+
+        time.textContent = hour.datetime.substring(0,5);
+        condition.textContent = hour.icon;
+        temp.textContent = hour.temp + " °";
+        
+        hourCard.append(time,condition,temp);
+        container.append(hourCard);
+    });
+}
 
 function renderCurrentForecast(data) {
     clearCurrentForecast();
