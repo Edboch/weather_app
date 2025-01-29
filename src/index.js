@@ -14,6 +14,15 @@ async function getLocationWeather(loc) {
     }
 }
 
+async function loadImage(filename) {
+    try {
+        const image = await import(`./img/${filename}.svg`);
+        return image.default;
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 function clearCurrentForecast() {
     const tempDisplay = document.querySelector('.temp-display');
     const details = document.querySelector('.details');
@@ -24,16 +33,16 @@ function clearCurrentForecast() {
 function renderDayForecast(data) {
     const container = document.querySelector('.day-forecast');
     const hours = data.days["0"].hours;
-    hours.forEach(hour => {
+    hours.forEach(async (hour) => {
         const hourCard = document.createElement('div');
         hourCard.setAttribute('data-hour',hour.datetime);
 
         const time = document.createElement('p');
-        const condition = document.createElement('p');
+        const condition = document.createElement('img');
         const temp = document.createElement('p');
 
         time.textContent = hour.datetime.substring(0,5);
-        condition.textContent = hour.icon;
+        condition.src = await loadImage(hour.icon);
         temp.textContent = hour.temp + " °";
         
         hourCard.append(time,condition,temp);
