@@ -1,4 +1,4 @@
-import "./style.css"
+import "./style.css";
 // import * as data from './data.json'
 
 async function getLocationWeather(loc) {
@@ -16,7 +16,7 @@ async function getLocationWeather(loc) {
 
 async function loadImage(filename) {
     try {
-        const image = await import(`./img/${filename}.svg`);
+        const image = await import(`./weather_icons/${filename}.svg`);
         return image.default;
     } catch (e) {
         console.error(e);
@@ -36,6 +36,7 @@ function renderDayForecast(data) {
     hours.forEach(async (hour) => {
         const hourCard = document.createElement('div');
         hourCard.setAttribute('data-hour',hour.datetime);
+        hourCard.classList.add('hour-card');
 
         const time = document.createElement('p');
         const condition = document.createElement('img');

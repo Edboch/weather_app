@@ -21,21 +21,35 @@ body {
     gap: 24px;
 }
 
+.search {
+    display: flex;
+    align-items: center;
+}
+
 #search-bar {
     width: 300px;
-    padding: 4px 18px;
+    padding: 4px 18px 2px;
     border: none;
     border-radius: 18px;
     font-size: 1.2rem;
     line-height: 1.5;
 }
 
-.current-forecast {
+#search-btn {
+    border: none;
+    background-color: transparent;
+}
+
+.current-forecast,
+.day-forecast {
     width: 100%;
     padding: 24px;
     border-radius: 24px;
     background-color: rgba(0, 0, 0, 0.712);
     color: #fff;
+}
+
+.current-forecast {
     display: grid;
     grid-template-columns: 2fr 1fr;
     align-items: center;
@@ -52,4 +66,19 @@ body {
 
 .temp {
     font-size: 4rem;
+}
+
+.day-forecast {
+    display: flex;
+    gap: 5px;
+    overflow: auto;
+    border-end-end-radius: 0px;
+    border-end-start-radius: 0px;
+    scrollbar-color: rgba(143, 143, 143, 0.712) rgb(75, 75, 75) ;
+    scrollbar-width: thin;
+}
+
+.hour-card > img {
+    width: 50px;
+    height: 50px;
 }
