@@ -9,6 +9,7 @@ async function getLocationWeather(loc) {
         console.log(data);
         renderCurrentForecast(data);
         renderDayForecast(data);
+        renderTenDayForecast(data);
     } catch (error) {
         console.error(error);
     }
@@ -32,6 +33,7 @@ function clearCurrentForecast() {
 
 function renderDayForecast(data) {
     const container = document.querySelector('.day-forecast');
+    container.innerHTML = '';
     const hours = data.days["0"].hours;
     hours.forEach(async (hour) => {
         const hourCard = document.createElement('div');
@@ -96,6 +98,36 @@ function renderCurrentForecast(data) {
         visibility,
         windspeed
     )
+}
+
+async function renderTenDayForecast(data) {
+    const container = document.querySelector('.ten-day-forecast');
+    container.innerHTML = '';
+    const days = data.days;
+    for(let i = 1; i<11; i++) {
+        let day = days[i];
+        const dayCard = document.createElement('div');
+        dayCard.setAttribute('data-date',day.datetime);
+        dayCard.classList.add('day-card');
+
+        const date = document.createElement('p');
+        const condition = document.createElement('img');
+        const tempRange = document.createElement('div');
+        const high = document.createElement('p');
+        const low = document.createElement('p');
+
+        tempRange.classList.add('temp-range');
+
+        date.textContent = day.datetime;
+        condition.src = await loadImage(day.icon);
+        high.textContent = "H : " + day.tempmax + "°";
+        low.textContent = "L : " + day.tempmin + "°";
+
+        tempRange.append(low,high);
+        dayCard.append(date,condition,tempRange);
+        console.log(dayCard);
+        container.append(dayCard);
+    }
 }
 
 

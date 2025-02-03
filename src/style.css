@@ -40,6 +40,7 @@ body {
     background-color: transparent;
 }
 
+.ten-day-forecast,
 .current-forecast,
 .day-forecast {
     width: 100%;
@@ -78,7 +79,40 @@ body {
     scrollbar-width: thin;
 }
 
-.hour-card > img {
+.hour-card > img{
     width: 50px;
     height: 50px;
+}
+
+
+.ten-day-forecast {
+    display: grid;
+    grid-template: repeat(2,1fr) / repeat(5,1fr);
+    justify-items: center;
+    gap: 20px;
+    font-size: 1.3rem;
+}
+
+.day-card {
+    text-align: center;
+}
+
+.temp-range {
+    display: flex;
+    gap: 5px;
+}
+
+.day-card > img {
+    width: 100px;
+    height: 100px;
+}
+
+.title { 
+    align-self: start;
+    margin-top: 20px;
+}
+
+.credit {
+    position: absolute;
+    bottom: 5px;
 }
